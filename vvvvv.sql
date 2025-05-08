@@ -1,0 +1,76 @@
+drop database if exists biblioteca;
+CREATE DATABASE biblioteca;
+USE biblioteca;
+
+
+
+CREATE TABLE BIBLIOTECA(
+id_Biblioteca int PRIMARY KEY auto_increment,
+Nombre varchar (50),
+Direccion varchar (50));
+
+CREATE TABLE  LIBRO(
+id_Libro int PRIMARY KEY auto_increment,
+Nombre varchar (50),
+Genero_lit varchar (50),
+ID_EDITORIAL int,
+ID_BIBLIOTECA int);
+
+CREATE TABLE EDITORIAL(
+id_Editorial int PRIMARY KEY auto_increment,
+Nombre varchar (50),
+Email varchar (50),
+Pais varchar (50));
+
+CREATE TABLE AUTOR(
+id_Autor int PRIMARY KEY auto_increment,
+Nombre varchar (50),
+Apellido varchar (50));
+
+CREATE TABLE ROLES(
+id_Roles int PRIMARY KEY auto_increment,
+Nom_rol varchar (50));
+
+CREATE TABLE USUARIO(
+id_Usuario int PRIMARY KEY,
+Nombre varchar (50),
+Apellido varchar (50),
+Num_tel int,
+Direccion varchar (50),
+ID_ROLES int);
+
+CREATE TABLE PRESTAMOS(
+id_Prestamo int PRIMARY KEY auto_increment,
+Fecha_prest date,
+Fecha_dev date,
+ID_LIBRO int,
+ID_USUARIO int);
+
+CREATE TABLE PRESTAMOS_LIBRO(
+PRESTAMOSID int PRIMARY KEY auto_increment,
+LIBROID int);
+
+CREATE TABLE LIBRO_AUTOR(
+LIBROID int,
+AUTORID int);
+
+ALTER TABLE LIBRO
+ADD CONSTRAINT FK_LIBRO_BIBLIOTECA
+FOREIGN KEY (ID_BIBLIOTECA) REFERENCES BIBLIOTECA (ID_BIBLIOTECA);
+
+ALTER TABLE LIBRO
+ADD CONSTRAINT FK_LIBRO_EDITORIAL
+FOREIGN KEY (ID_EDITORIAL) REFERENCES EDITORIAL(ID_EDITORIAL);
+
+ALTER TABLE USUARIO
+ADD CONSTRAINT FK_USUARIO_ROLES
+FOREIGN KEY (ID_ROLES) REFERENCES ROLES(ID_ROLES);
+
+ALTER TABLE PRESTAMOS
+ADD CONSTRAINT FK_PRESTAMOS_USUARIO
+FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO(ID_USUARIO);
+
+ALTER TABLE PRESTAMOS
+ADD CONSTRAINT FK_PRESTAMOS_LIBRO
+FOREIGN KEY (ID_LIBRO) REFERENCES LIBRO(ID_LIBRO);
+
